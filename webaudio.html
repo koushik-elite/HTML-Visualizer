@@ -1,491 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>webaudio</title>
-		<meta name="description" content="" />
-		<meta name="author" content="koushik" />
+	<title>webaudio</title>
+	<meta name="description" content="" />
+	<meta name="author" content="koushik" />
 
-		<meta name="viewport" content="width=1024px; initial-scale=1.0" />
+	<meta name="viewport" content="width=1024px; initial-scale=1.0" />
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-		<script src="js/jquery-1.11.2.min.js"></script>
-	</head>
-	<style>
-		body, html {
-			background-color: #000000;
-			padding: 0;
-			margin: 0;
-			background-image: url("images/background.png");
-			background-repeat: repeat;
-			background-position: 0 0;
-		}
-		#workarea_visual {
-			position: relative;
-			display: inline-block;
-			width: auto;
-			clear: both;
-			text-align: center;
-		}
-		a.button {
-  display: inline-block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 999;
-  width: 70px;
-  height: 70px;
-  color: transparent;
-  border: 3px solid #ffffff;
-  border-radius: 50%;
-  margin-left: -35px;
-  margin-top: 13px;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-a.button.play.playing::before {
-  background: transparent none repeat scroll 0 0;
-  border-bottom: 0;
-  border-left: 7px solid #fff;
-  border-radius: 4px;
-  border-top: 0;
-  content: "";
-  display: inline-block;
-  height: 39px;
-  margin-left: 11px;
-  margin-top: 13px;
-  opacity: 1;
-  transform: translateZ(0px);
-  -webkit-transform: translateZ(0px);
-  vertical-align: middle;
-  width: 10px;
-  z-index: 1;
-  border-radius: 0;
-  border-right: 7px solid #fff;
-}
-a.button.play.loading::before {
-  background: #ffffff none repeat scroll 0 0;
-  border-color: -moz-use-text-color #fff;
-  border-radius: 0;
-  border-style: none solid;
-  border-width: 0;
-  content: "";
-  display: inline-block;
-  height: 10px;
-  margin-left: -19px;
-  margin-top: 26px;
-  opacity: 1;
-  transform: translateZ(0px);
-  vertical-align: middle;
-  width: 10px;
-  z-index: 1;
-  -webkit-animation: loading 2s infinite;
-    animation: loading 2s infinite;
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes loading {
-    0% {
-		opacity: 0;
-		margin-left: -19px;
+	<script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<style>
+	body,
+	html {
+		background-color: #000000;
+		padding: 0;
+		margin: 0;
+		background-image: url("images/background.png");
+		background-repeat: repeat;
+		background-position: 0 0;
 	}
-	20% {
-		opacity: 0.5;
+
+	#workarea_visual {
+		position: relative;
+		display: inline-block;
+		width: auto;
+		clear: both;
+		text-align: center;
 	}
-	50% {
+
+	a.button {
+		display: inline-block;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 999;
+		width: 70px;
+		height: 70px;
+		color: transparent;
+		border: 3px solid #ffffff;
+		border-radius: 50%;
+		margin-left: -35px;
+		margin-top: 13px;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+	}
+
+	a.button.play.playing::before {
+		background: transparent none repeat scroll 0 0;
+		border-bottom: 0;
+		border-left: 7px solid #fff;
+		border-radius: 4px;
+		border-top: 0;
+		content: "";
+		display: inline-block;
+		height: 39px;
+		margin-left: 11px;
+		margin-top: 13px;
 		opacity: 1;
+		transform: translateZ(0px);
+		-webkit-transform: translateZ(0px);
+		vertical-align: middle;
+		width: 10px;
+		z-index: 1;
+		border-radius: 0;
+		border-right: 7px solid #fff;
 	}
-	80% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 0;
-		margin-left: 39px;
-	}    
+
+	#audio-time {
+    display: inline-block;
+    min-width: 90px;
+    text-align: center;
 }
 
-/* Standard syntax */
-@keyframes loading {
-    0% {
-		opacity: 0;
+	a.button.play.loading::before {
+		background: #ffffff none repeat scroll 0 0;
+		border-color: -moz-use-text-color #fff;
+		border-radius: 0;
+		border-style: none solid;
+		border-width: 0;
+		content: "";
+		display: inline-block;
+		height: 10px;
 		margin-left: -19px;
-	}
-	20% {
-		opacity: 0.5;
-	}
-	50% {
+		margin-top: 26px;
 		opacity: 1;
+		transform: translateZ(0px);
+		vertical-align: middle;
+		width: 10px;
+		z-index: 1;
+		-webkit-animation: loading 2s infinite;
+		animation: loading 2s infinite;
 	}
-	80% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 0;
-		margin-left: 39px;
-	}    
-}
 
-a.button.play::before {
-  background: transparent none repeat scroll 0 0;
-  border-bottom: 20px solid transparent;
-  border-left: 35px solid #fff;
-  border-radius: 4px;
-  border-top: 20px solid transparent;
-  content: "";
-  display: inline-block;
-  height: 0;
-  opacity: 1;
-  transform: translateZ(0px);
-  -webkit-transform: translateZ(0px);
-  width: 0;
-  z-index: 1;
-  vertical-align: middle;
-  margin-left: 19px;
-  margin-top: 12px;
-}
-		ul.visualizer {
-			display: inline-block;
-			height: auto;
-			line-height: 0;
-			list-style: outside none none;
-			margin: 0;
-			min-width: 100px;
-			padding: 0;
-			vertical-align: bottom;
-			width: auto;
-			padding: 0 80px 6px;
-			background: #000000;
-			position: relative;
+	/* Chrome, Safari, Opera */
+
+	@-webkit-keyframes loading {
+		0% {
+			opacity: 0;
+			margin-left: -19px;
 		}
-		@media only screen and (max-width: 1200px) {
-			ul.visualizer {
-				padding: 0 60px 6px;
-			}
-		}
-		ul#visualizer:after {
-			content: " ";
-			display: inline-block;
-			width: 100%;
-			height: 10px;
-			border-radius: 30%;
-			background-color: #ffffff;
-			box-shadow: 0px 0px 35px 4px rgba(255,255,255,255.75);
-			-webkit-box-shadow: 0px 0px 35px 4px rgba(255,255,255,255.75);
-			left: 0;
-			position: absolute;
-			bottom: -1px;
-			z-index: 999;
-		}
-		ul.visualizer.reflection:after {
-			background-image: url("images/rainbow.png");
-			background-position: 100% auto;
-			content: " ";
-			display: inline-block;
-			width: 100%;
-			height: 100%;
-			left: 0;
-			background-size: 100% auto;
-			position: absolute;
-			top: -2px;
+		20% {
 			opacity: 0.5;
 		}
-		ul.visualizer li {
-			background: red none repeat scroll 0 0;
-			display: inline-block;
-			height: 30px;
-			line-height: 0;
-			margin-right: 1px;
-			min-height: 31px;
-			vertical-align: baseline;
-			width: 20px;
-			padding: 0;
-			height: 0px;
-			background-image: url("images/blue.png");
-			background-size: 100% auto;
-			background-position: 0 bottom;
-			width: 63px;
+		50% {
+			opacity: 1;
 		}
-		div.playbutton{
-			width: 100%;
-    		text-align: left;
-    		height: auto;
-    		min-height: 100px;
+		80% {
+			opacity: 0.5;
 		}
-		div.playbutton:empty {
-    		background-image: url("images/puff.svg?ee");
-    		background-repeat: no-repeat;
-    		background-position: center center;
+		100% {
+			opacity: 0;
+			margin-left: 39px;
 		}
-		ul.visualizer.reflection li {
+	}
 
-			vertical-align: top;
-			opacity: 0.4;
-		}
-		ul.visualizer.reflection {
+	/* Standard syntax */
 
-			margin-bottom: 10px;
+	@keyframes loading {
+		0% {
+			opacity: 0;
+			margin-left: -19px;
 		}
-		ul.visualizer li:nth-child(2n) {
-			background-image: url("images/blue1.png");
+		20% {
+			opacity: 0.5;
 		}
-		ul.visualizer li:nth-child(3n) {
-			background-image: url("images/green.png");
+		50% {
+			opacity: 1;
 		}
-		ul.visualizer li:nth-child(4n) {
-			background-image: url("images/ligreen.png");
+		80% {
+			opacity: 0.5;
 		}
-		ul.visualizer li:nth-child(5n) {
-			background-image: url("images/ligreen1.png");
+		100% {
+			opacity: 0;
+			margin-left: 39px;
 		}
-		ul.visualizer li:nth-child(6n) {
-			background-image: url("images/ligreen2.png");
-		}
-		ul.visualizer li:nth-child(7n) {
-			background-image: url("images/red.png");
-		}
+	}
 
-		ul.visualizer:before {
-			display: inline-block;
-			width: 1px;
-			height: 300px;
-			vertical-align: bottom;
-			content: " ";
+	a.button.play::before {
+		background: transparent none repeat scroll 0 0;
+		border-bottom: 20px solid transparent;
+		border-left: 35px solid #fff;
+		border-radius: 4px;
+		border-top: 20px solid transparent;
+		content: "";
+		display: inline-block;
+		height: 0;
+		opacity: 1;
+		transform: translateZ(0px);
+		-webkit-transform: translateZ(0px);
+		width: 0;
+		z-index: 1;
+		vertical-align: middle;
+		margin-left: 19px;
+		margin-top: 12px;
+	}
+
+	ul.visualizer {
+		display: inline-block;
+		height: auto;
+		line-height: 0;
+		list-style: outside none none;
+		margin: 0;
+		min-width: 100px;
+		padding: 0;
+		vertical-align: bottom;
+		width: auto;
+		padding: 0 80px 6px;
+		background: #000000;
+		position: relative;
+	}
+
+	@media only screen and (max-width: 1200px) {
+		ul.visualizer {
+			padding: 0 60px 6px;
 		}
-		audio {
-  display: none;
-}
-	</style>
-	<body>
-		<div id="workarea_visual">
-			<a href="#playbutton" id="playbutton" class="button play loading">p</a>
-			<ul class="visualizer" id="visualizer"></ul>
-			<ul class="visualizer reflection"></ul>
-		</div>
-		<script>
-			/* comments - Initilize the Audio Context */
+	}
 
-			var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-			var analyser = audioCtx.createAnalyser();
-			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-			window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
-			var PlayerBuffer = null;
-			var music = 'assets/test_audio.mp3';
-			var ipadmusic = 'assets/Linkin_Park_-_Runaway_Chipmunk.m4a';
-			var frequencyData = 0;
-			var bars;
-			var audio;
-		</script>
-		<script>
-			function supportCreateMediaElementSource(music) {
+	ul#visualizer:after {
+		content: " ";
+		display: inline-block;
+		width: 100%;
+		height: 10px;
+		border-radius: 30%;
+		background-color: #ffffff;
+		box-shadow: 0px 0px 35px 4px rgba(255, 255, 255, 255.75);
+		-webkit-box-shadow: 0px 0px 35px 4px rgba(255, 255, 255, 255.75);
+		left: 0;
+		position: absolute;
+		bottom: -1px;
+		z-index: 999;
+	}
 
-				var javascriptNode;
+	ul.visualizer.reflection:after {
+		background-image: url("images/rainbow.png");
+		background-position: 100% auto;
+		content: " ";
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		background-size: 100% auto;
+		position: absolute;
+		top: -2px;
+		opacity: 0.5;
+	}
 
-				/* comments - Initilize the Audio node */
+	ul.visualizer li {
+		background: red none repeat scroll 0 0;
+		display: inline-block;
+		height: 30px;
+		line-height: 0;
+		margin-right: 1px;
+		min-height: 31px;
+		vertical-align: baseline;
+		width: 20px;
+		padding: 0;
+		height: 0px;
+		background-image: url("images/blue.png");
+		background-size: 100% auto;
+		background-position: 0 bottom;
+		width: 63px;
+	}
 
-				audio = new Audio();
-				audio.src = music;
-				audio.controls = false;
-				audio.autoplay = false;
-				audio.addEventListener('canplaythrough', function(){
-					$("#playbutton.loading").removeClass("loading");
-				}, false);
-				audio.addEventListener('pause', function(){
-					$("#playbutton").removeClass("playing");
-				}, false);
-				
-				audio.addEventListener('play', function(){
-					$("#playbutton").addClass("playing");
-				}, false);
+	div.playbutton {
+		width: 100%;
+		text-align: left;
+		height: auto;
+		min-height: 100px;
+	}
 
-				/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
+	div.playbutton:empty {
+		background-image: url("images/puff.svg?ee");
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
 
-				$(window).load(function() {
-					document.body.appendChild(audio);
-					$("#playbutton").on('touchstart click',function(event){
-						audio.muted = false;
-						if($(this).hasClass("playing")){
-							audio.pause();
-							//$(this).removeClass("playing");
-						}else{
-							audio.play();
-							//$(this).addClass("playing");
-						}
-						return false;
-					});
+	ul.visualizer.reflection li {
+
+		vertical-align: top;
+		opacity: 0.4;
+	}
+
+	ul.visualizer.reflection {
+
+		margin-bottom: 10px;
+	}
+
+	ul.visualizer li:nth-child(2n) {
+		background-image: url("images/blue1.png");
+	}
+
+	ul.visualizer li:nth-child(3n) {
+		background-image: url("images/green.png");
+	}
+
+	ul.visualizer li:nth-child(4n) {
+		background-image: url("images/ligreen.png");
+	}
+
+	ul.visualizer li:nth-child(5n) {
+		background-image: url("images/ligreen1.png");
+	}
+
+	ul.visualizer li:nth-child(6n) {
+		background-image: url("images/ligreen2.png");
+	}
+
+	ul.visualizer li:nth-child(7n) {
+		background-image: url("images/red.png");
+	}
+
+	ul.visualizer:before {
+		display: inline-block;
+		width: 1px;
+		height: 300px;
+		vertical-align: bottom;
+		content: " ";
+	}
+
+	audio {
+		display: none;
+	}
+</style>
+
+<body>
+	<div id="workarea_visual">
+		<a href="#playbutton" id="playbutton" class="button play loading">p</a>
+		<ul class="visualizer" id="visualizer"></ul>
+		<ul class="visualizer reflection"></ul>
+	</div>
+	<script>
+		/* comments - Initilize the Audio Context */
+
+		var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		var analyser = audioCtx.createAnalyser();
+		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
+		var PlayerBuffer = null;
+		var music = 'assets/test_audio.mp3';
+		var ipadmusic = 'assets/Linkin_Park_-_Runaway_Chipmunk.m4a';
+		var frequencyData = 0;
+		var bars;
+		var audio;
+	</script>
+	<script>
+		function supportCreateMediaElementSource(music) {
+
+			var javascriptNode;
+
+			/* comments - Initilize the Audio node */
+
+			audio = new Audio();
+			audio.src = music;
+			audio.controls = false;
+			audio.autoplay = false;
+			audio.addEventListener('canplaythrough', function () {
+				$("#playbutton.loading").removeClass("loading");
+			}, false);
+			audio.addEventListener('pause', function () {
+				$("#playbutton").removeClass("playing");
+			}, false);
+
+			audio.addEventListener('play', function () {
+				$("#playbutton").addClass("playing");
+			}, false);
+
+			/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
+
+			$(window).load(function () {
+				document.body.appendChild(audio);
+				$("#playbutton").on('touchstart click', function (event) {
+					audio.muted = false;
+					if ($(this).hasClass("playing")) {
+						audio.pause();
+						//$(this).removeClass("playing");
+					} else {
+						audio.play();
+						//$(this).addClass("playing");
+					}
+					return false;
 				});
+			});
 
-				/* comments - Initilize the Javascript Node Processor */
+			/* comments - Initilize the Javascript Node Processor */
 
-				if (audioCtx.createScriptProcessor) {
-					javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
-				} else {
-					javascriptNode = audioCtx.createJavaScriptNode(2048, 1, 1);
-				}
-
-				// Wait for window.onload to fire. See crbug.com/112368
-				window.addEventListener('load', function(e) {
-					// Our <audio> element will be the audio source.
-					var source = audioCtx.createMediaElementSource(audio);
-					source.connect(analyser);
-					javascriptNode.connect(audioCtx.destination);
-					analyser.connect(audioCtx.destination);
-					analyser.smoothingTimeConstant = 0.0;
-					analyser.fftSize = 64;
-
-					//analyser.maxDecibels = -10;
-					frequencyData = new Uint8Array(analyser.frequencyBinCount);
-
-					/* comments - Create visualizer animation node (Div element for bar animation) */
-
-					var barcount = 16;
-
-					for ( i = 0; i < barcount; i = i + 3) {
-						$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
-					}
-
-					for ( i = 0; i < barcount; i = i + 2) {
-						$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
-					}
-					bars = $("ul.visualizer li.bars");
-
-					/* comments - This event will fired each time when ever a single bit of audio is played */
-
-					javascriptNode.onaudioprocess = function() {
-						//$("#playbutton.loading").removeClass("loading");
-						// get the average for the first channel
-						if(audio.muted){
-							console.info("muted");
-							$("#playbutton").removeClass("playing");
-							audio.pause();
-						}
-						frequencyData = new Uint8Array(analyser.frequencyBinCount);
-						analyser.getByteFrequencyData(frequencyData);
-						bars.each(function(index, bar) {
-							var value = frequencyData[$(bar).attr("ref")];
-							value = parseInt(value / 31) * 31;
-							bar.style.height = value + 'px';
-							//console.info(frequencyData[index]);
-						});
-					}
-					//update();
-					// ...call requestAnimationFrame() and render the analyser's output to canvas.
-				}, false);
-
-			}
-		</script>
-		<script>
-			function loadSound(url) {
-				var request = new XMLHttpRequest();
-				request.open('GET', url, true);
-				request.responseType = 'arraybuffer';
-
-				// Decode asynchronously
-				request.onload = function() {
-					audioCtx.decodeAudioData(request.response, function(buffer) {
-						PlayerBuffer = buffer;
-						$("div.playbutton").append("<button id='playbutton'>play</button>");
-						$("#playbutton").on('touchstart click',function(event){
-							playSound(PlayerBuffer);
-							requestAnimationFrame(barAnimation);
-						});
-					});
-				}
-				request.send();
+			if (audioCtx.createScriptProcessor) {
+				javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
+			} else {
+				javascriptNode = audioCtx.createJavaScriptNode(2048, 1, 1);
 			}
 
-			function playSound(buffer) {
-				alert(buffer);
-				
-				var source = this.audioCtx.createBufferSource();
-				//var volume = this.audioCtx.createGain();
-				// creates a sound source
-				source.buffer = buffer;
-				// tell the source which sound to play
-				//source.connect(audioCtx.destination);       // connect the source to the context's destination (the speakers)
-				source.connect(this.analyser);
-				//volume.connect(this.audioCtx.destination);
-				source.loop = true;
-				source.noteOn(0);
-				//volume.start(this.audioCtx.currentTime + 0.01);
-				/*
-				var audiosource = this.audioCtx.createBufferSource();
-				// creates a sound source
-				audiosource.buffer = buffer;
-				// tell the source which sound to play
-				audiosource.connect(this.audioCtx.destination);       // connect the source to the context's destination (the speakers)
-				//audiosource.connect(this.analyser);
-				audiosource.loop = true;
-				audiosource.noteOn(0);
-				// play the source now
-				*/
-				
-			}
-
-			function notSupportCreateMediaElementSource(musicurl) {
-				this.analyser = audioCtx.createAnalyser();
-				$("body").append("<div class='playbutton'></div>");
-				loadSound(musicurl);
-
+			// Wait for window.onload to fire. See crbug.com/112368
+			window.addEventListener('load', function (e) {
 				// Our <audio> element will be the audio source.
+				var source = audioCtx.createMediaElementSource(audio);
+				source.connect(analyser);
+				javascriptNode.connect(audioCtx.destination);
+				analyser.connect(audioCtx.destination);
+				analyser.smoothingTimeConstant = 0.0;
+				analyser.fftSize = 64;
 
-				this.analyser.smoothingTimeConstant = 0.0;
-				this.analyser.fftSize = 64;
-				this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+				//analyser.maxDecibels = -10;
+				frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
 				/* comments - Create visualizer animation node (Div element for bar animation) */
 
 				var barcount = 16;
 
-				for ( i = 0; i < barcount; i = i + 3) {
+				for (i = 0; i < barcount; i = i + 3) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 
-				for ( i = 0; i < barcount; i = i + 2) {
+				for (i = 0; i < barcount; i = i + 2) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 				bars = $("ul.visualizer li.bars");
 
 				/* comments - This event will fired each time when ever a single bit of audio is played */
 
+				javascriptNode.onaudioprocess = function () {
+					//$("#playbutton.loading").removeClass("loading");
+					// get the average for the first channel
+					if (audio.muted) {
+						console.info("muted");
+						$("#playbutton").removeClass("playing");
+						audio.pause();
+					}
+					frequencyData = new Uint8Array(analyser.frequencyBinCount);
+					analyser.getByteFrequencyData(frequencyData);
+					bars.each(function (index, bar) {
+						var value = frequencyData[$(bar).attr("ref")];
+						value = parseInt(value / 31) * 31;
+						bar.style.height = value + 'px';
+						//console.info(frequencyData[index]);
+					});
+				}
 				//update();
 				// ...call requestAnimationFrame() and render the analyser's output to canvas.
+			}, false);
 
-			}
+		}
+	</script>
+	<script>
+		function loadSound(url) {
+			var request = new XMLHttpRequest();
+			request.open('GET', url, true);
+			request.responseType = 'arraybuffer';
 
-			function barAnimation() {
-				analyser.smoothingTimeConstant = 0.0;
-				analyser.fftSize = 64;
-				analyser.getByteFrequencyData(frequencyData);
-				//console.info(frequencyData);
-				bars.each(function(index, bar) {
-					var value = frequencyData[$(bar).attr("ref")];
-					value = parseInt(value / 31) * 31;
-					bar.style.height = value + 'px';
+			// Decode asynchronously
+			request.onload = function () {
+				audioCtx.decodeAudioData(request.response, function (buffer) {
+					PlayerBuffer = buffer;
+					$("div.playbutton").append("<button id='playbutton'>play</button>");
+					$("#playbutton").on('touchstart click', function (event) {
+						playSound(PlayerBuffer);
+						requestAnimationFrame(barAnimation);
+					});
 				});
-				requestAnimationFrame(barAnimation);
 			}
-		</script>
-		<script>
-			var support = false;
-			if (!navigator.userAgent.match(/Android/i) && !navigator.userAgent.match(/webOS/i) && !navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i) && !navigator.userAgent.match(/iPod/i) && !navigator.userAgent.match(/BlackBerry/i) && !navigator.userAgent.match(/Windows Phone/i)) {
-				support = true;
-			}else{
-				
+			request.send();
+		}
+
+		function playSound(buffer) {
+			alert(buffer);
+
+			var source = this.audioCtx.createBufferSource();
+			//var volume = this.audioCtx.createGain();
+			// creates a sound source
+			source.buffer = buffer;
+			// tell the source which sound to play
+			//source.connect(audioCtx.destination);       // connect the source to the context's destination (the speakers)
+			source.connect(this.analyser);
+			//volume.connect(this.audioCtx.destination);
+			source.loop = true;
+			source.noteOn(0);
+			//volume.start(this.audioCtx.currentTime + 0.01);
+			/*
+			var audiosource = this.audioCtx.createBufferSource();
+			// creates a sound source
+			audiosource.buffer = buffer;
+			// tell the source which sound to play
+			audiosource.connect(this.audioCtx.destination);       // connect the source to the context's destination (the speakers)
+			//audiosource.connect(this.analyser);
+			audiosource.loop = true;
+			audiosource.noteOn(0);
+			// play the source now
+			*/
+
+		}
+
+		function notSupportCreateMediaElementSource(musicurl) {
+			this.analyser = audioCtx.createAnalyser();
+			$("body").append("<div class='playbutton'></div>");
+			loadSound(musicurl);
+
+			// Our <audio> element will be the audio source.
+
+			this.analyser.smoothingTimeConstant = 0.0;
+			this.analyser.fftSize = 64;
+			this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+
+			/* comments - Create visualizer animation node (Div element for bar animation) */
+
+			var barcount = 16;
+
+			for (i = 0; i < barcount; i = i + 3) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 			}
-			
-			if (support) {
-				supportCreateMediaElementSource(music);
-			} else {
-				notSupportCreateMediaElementSource(music);
+
+			for (i = 0; i < barcount; i = i + 2) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 			}
-		</script>
-	</body>
+			bars = $("ul.visualizer li.bars");
+
+			/* comments - This event will fired each time when ever a single bit of audio is played */
+
+			//update();
+			// ...call requestAnimationFrame() and render the analyser's output to canvas.
+
+		}
+
+		function barAnimation() {
+			analyser.smoothingTimeConstant = 0.0;
+			analyser.fftSize = 64;
+			analyser.getByteFrequencyData(frequencyData);
+			//console.info(frequencyData);
+			bars.each(function (index, bar) {
+				var value = frequencyData[$(bar).attr("ref")];
+				value = parseInt(value / 31) * 31;
+				bar.style.height = value + 'px';
+			});
+			requestAnimationFrame(barAnimation);
+		}
+	</script>
+	<script>
+		var support = false;
+		if (!navigator.userAgent.match(/Android/i) && !navigator.userAgent.match(/webOS/i) && !navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i) && !navigator.userAgent.match(/iPod/i) && !navigator.userAgent.match(/BlackBerry/i) && !navigator.userAgent.match(/Windows Phone/i)) {
+			support = true;
+		} else {
+
+		}
+
+		if (support) {
+			supportCreateMediaElementSource(music);
+		} else {
+			notSupportCreateMediaElementSource(music);
+		}
+	</script>
+</body>
+
 </html>

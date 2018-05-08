@@ -1,587 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>webaudio</title>
-		<meta name="description" content="" />
-		<meta name="author" content="koushik" />
+	<title>webaudio</title>
+	<meta name="description" content="" />
+	<meta name="author" content="koushik" />
 
-		<meta name="viewport" content="width=1024px; initial-scale=1.0" />
+	<meta name="viewport" content="width=1024px; initial-scale=1.0" />
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<link href='https://fonts.googleapis.com/css?family=Orbitron:500,700' rel='stylesheet' type='text/css'>
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link href='https://fonts.googleapis.com/css?family=Orbitron:500,700' rel='stylesheet' type='text/css'>
 
-		<script src="js/jquery-1.11.2.min.js"></script>
-		<script src="js/jquery-canvas-sparkles.min.js"></script>
-		
-	</head>
-	<style>
-		body, html {
-			background-color: #020202;
-			padding: 0;
-			margin: 0;
-			background-image: url("images/background.png");
-			background-repeat: repeat;
-			background-position: 0 0;
-		}
-		#workarea_visual {
-			position: relative;
-    display: block;
-    width: 100%;
-	overflow: hidden;
-    clear: both;
-    text-align: center;
-	padding: 7% 20px 0;
-    box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-		}
-		.main-sparkel-wrapper{
-			display: block;
-    width: 100%;
-	overflow: hidden;
-	height: auto;
-	clear: both;
-		}
-		.main-wrapper{
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/jquery-canvas-sparkles.min.js"></script>
+
+</head>
+<style>
+	body,
+	html {
+		background-color: #020202;
+		padding: 0;
+		margin: 0;
+		background-image: url("images/background.png");
+		background-repeat: repeat;
+		background-position: 0 0;
+	}
+
+	#workarea_visual {
+		position: relative;
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		clear: both;
+		text-align: center;
+		padding: 7% 20px 0;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+	}
+
+	.main-sparkel-wrapper {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		height: auto;
+		clear: both;
+	}
+
+	.main-wrapper {
 		margin: 0 auto;
 		position: relative;
-    max-width: 1400px;
-	display: block;
-	width: 100%;
-	height: auto;
+		max-width: 1400px;
+		display: block;
+		width: 100%;
+		height: auto;
 	}
-		.audio-content {
-    display: block;
-    width: 100%;
-    text-align: left;
-    height: auto;
-    margin-bottom: 16px;
-	    padding: 0;
+
+	#audio-time {
+		display: inline-block;
+		min-width: 90px;
+		text-align: center;
+	}
+
+	.audio-content {
+		display: block;
+		width: 100%;
+		text-align: left;
+		height: auto;
+		margin-bottom: 16px;
+		padding: 0;
 		box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
+		-webkit-box-sizing: border-box;
+	}
 
-.audio-content > span.text.text-time {
-    text-align: right;
-}
-span.sub-text {
-    display: block;
-    font-size: 11px;
-    margin-top: 3px;
-}
-span.text {
-    display: inline-block;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-size: 16px;
-}
-span.text {
-    display: inline-block;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-size: 18px;
-    vertical-align: middle;
-    margin-right: 15px;
-    line-height: 1;
-}
-span.text.button {
-    text-align: center;
-}
-.audio-content > span.text {
-    display: table-cell;
-    width: 1px;
-    font-family: 'Orbitron', sans-serif;
-    height: auto;
-}
-.audio-content > span.text.button {
-    width: 1%;
-    overflow: hidden;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-}
-		a.button {
-  display: inline-block;
-  position: relative;
-  z-index: 999;
-  width: 70px;
-  vertical-align: middle;
-  height: 70px;
-  color: transparent;
-  border: 3px solid #ffffff;
-  border-radius: 50%;  
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  margin-right: 14px;
-}
-a.button.play.playing::before {
-  background: transparent none repeat scroll 0 0;
-  border-bottom: 0;
-  border-left: 7px solid #fff;
-  border-radius: 4px;
-  border-top: 0;
-  content: "";
-  display: inline-block;
-  height: 39px;
-  margin-left: 20px;
-  margin-top: 13px;
-  opacity: 1;
-  transform: translateZ(0px);
-  -webkit-transform: translateZ(0px);
-  vertical-align: middle;
-  width: 10px;
-  z-index: 1;
-  border-radius: 0;
-  border-right: 7px solid #fff;
-  
-  position: absolute;
-    margin: 0;
-    top: 12px;
-    left: 21px;
-}
-a.button.play.loading::before {
-  background: #ffffff none repeat scroll 0 0;
-  border-color: -moz-use-text-color #fff;
-  border-radius: 0;
-  border-style: none solid;
-  border-width: 0;
-  content: "";
-  display: inline-block;
-  height: 10px;
-  margin-left: -19px;
-  margin-top: 26px;
-  opacity: 1;
-  transform: translateZ(0px);
-  vertical-align: middle;
-  width: 10px;
-  z-index: 1;
-  -webkit-animation: loading 2s infinite;
-    animation: loading 2s infinite;
-	
-	
-	
-}
-.full-visulizer {
-    display: block;
-    width: 100%;
-    height: auto;
-    /* border-top: 7px solid #FFA1FF; */
-    position: relative;
-    /* box-shadow: 0px 0px 10px 2px rgba(255,159,255,1); */
-}
-.full-visulizer:after {
-    
-    height: 2px;
-    width: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #FFA1FF none repeat scroll 0 0;
-    box-shadow: 0px 0px 10px 2px rgba(255,159,255,1);
-	-webkit-box-shadow: 0px 0px 10px 2px rgba(255,159,255,1);
-}
-/* Chrome, Safari, Opera */
-@-webkit-keyframes loading {
-    0% {
-		opacity: 0;
-		margin-left: -19px;
+	.audio-content>span.text.text-time {
+		text-align: right;
 	}
-	20% {
-		opacity: 0.5;
+
+	span.sub-text {
+		display: block;
+		font-size: 11px;
+		margin-top: 3px;
 	}
-	50% {
+
+	span.text {
+		display: inline-block;
+		color: #ffffff;
+		text-transform: uppercase;
+		font-size: 16px;
+	}
+
+	span.text {
+		display: inline-block;
+		color: #ffffff;
+		text-transform: uppercase;
+		font-size: 18px;
+		vertical-align: middle;
+		margin-right: 15px;
+		line-height: 1;
+	}
+
+	span.text.button {
+		text-align: center;
+	}
+
+	.audio-content>span.text {
+		display: table-cell;
+		width: 1px;
+		font-family: 'Orbitron', sans-serif;
+		height: auto;
+	}
+
+	.audio-content>span.text.button {
+		width: 1%;
+		overflow: hidden;
+		height: auto;
+		padding: 0;
+		margin: 0;
+		text-align: left;
+	}
+
+	a.button {
+		display: inline-block;
+		position: relative;
+		z-index: 999;
+		width: 70px;
+		vertical-align: middle;
+		height: 70px;
+		color: transparent;
+		border: 3px solid #ffffff;
+		border-radius: 50%;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		margin-right: 14px;
+	}
+
+	a.button.play.playing::before {
+		background: transparent none repeat scroll 0 0;
+		border-bottom: 0;
+		border-left: 7px solid #fff;
+		border-radius: 4px;
+		border-top: 0;
+		content: "";
+		display: inline-block;
+		height: 39px;
+		margin-left: 20px;
+		margin-top: 13px;
 		opacity: 1;
-	}
-	80% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 0;
-		margin-left: 39px;
-	}    
-}
+		transform: translateZ(0px);
+		-webkit-transform: translateZ(0px);
+		vertical-align: middle;
+		width: 10px;
+		z-index: 1;
+		border-radius: 0;
+		border-right: 7px solid #fff;
 
-/* Standard syntax */
-@keyframes loading {
-    0% {
-		opacity: 0;
+		position: absolute;
+		margin: 0;
+		top: 12px;
+		left: 21px;
+	}
+
+	a.button.play.loading::before {
+		background: #ffffff none repeat scroll 0 0;
+		border-color: -moz-use-text-color #fff;
+		border-radius: 0;
+		border-style: none solid;
+		border-width: 0;
+		content: "";
+		display: inline-block;
+		height: 10px;
 		margin-left: -19px;
-	}
-	20% {
-		opacity: 0.5;
-	}
-	50% {
+		margin-top: 26px;
 		opacity: 1;
-	}
-	80% {
-		opacity: 0.5;
-	}
-	100% {
-		opacity: 0;
-		margin-left: 39px;
-	}    
-}
+		transform: translateZ(0px);
+		vertical-align: middle;
+		width: 10px;
+		z-index: 1;
+		-webkit-animation: loading 2s infinite;
+		animation: loading 2s infinite;
 
-a.button.play::before {
-  background: transparent none repeat scroll 0 0;
-  border-bottom: 20px solid transparent;
-  border-left: 35px solid #fff;
-  border-radius: 4px;
-  border-top: 20px solid transparent;
-  content: "";
-  display: inline-block;
-  height: 0;
-  opacity: 1;
-  transform: translateZ(0px);
-  -webkit-transform: translateZ(0px);
-  width: 0;
-  z-index: 1;
-  vertical-align: middle;
-  margin-left: 19px;
-  margin-top: 12px;
-  
-  margin: 0;
-    position: absolute;
-    left: 18px;
-    top: 11px;
-}
-		ul.visualizer {
-    display: inline-block;
-    height: auto;
-    line-height: 0;
-    list-style: outside none none;
-    margin: 0;
-    min-width: 100px;
-    padding: 0;
-    vertical-align: bottom;
-    width: auto;
-    padding: 0;
-    background: #000000;
-    position: relative;
-    width: 100%;
-	vertical-align: top;
-}
-		@media only screen and (max-width: 1200px) {
-			ul.visualizer {
-				padding: 0 60px 6px;
-			}
-		}
-		
-		
-		ul.visualizer li {
-    background: #FFA1FF none repeat scroll 0 0;
-    display: inline-block;
-    height: 30px;
-    line-height: 0;
-    min-height: 3px;
-    vertical-align: baseline;
-    
-    padding: 0;
-    height: 0px;
-    background-image: none;
-    background-size: 100% auto;
-    background-position: 0 bottom;
-    width: 2px;
-    box-shadow: 0px 0px 10px 2px rgba(255,159,255,1);
-    border-radius: 10px;
-    margin-left: 3px;
-}
-		div.playbutton{
-			width: 100%;
-    		text-align: left;
-    		height: auto;
-    		min-height: 100px;
-		}
-		div.playbutton:empty {
-    		background-image: url("images/puff.svg?ee");
-    		background-repeat: no-repeat;
-    		background-position: center center;
-		}
-		ul.visualizer.reflection li {
 
-			vertical-align: top;
+
+	}
+
+	.full-visulizer {
+		display: block;
+		width: 100%;
+		height: auto;
+		/* border-top: 7px solid #FFA1FF; */
+		position: relative;
+		/* box-shadow: 0px 0px 10px 2px rgba(255,159,255,1); */
+	}
+
+	.full-visulizer:after {
+
+		height: 2px;
+		width: 100%;
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #FFA1FF none repeat scroll 0 0;
+		box-shadow: 0px 0px 10px 2px rgba(255, 159, 255, 1);
+		-webkit-box-shadow: 0px 0px 10px 2px rgba(255, 159, 255, 1);
+	}
+
+	/* Chrome, Safari, Opera */
+
+	@-webkit-keyframes loading {
+		0% {
+			opacity: 0;
+			margin-left: -19px;
+		}
+		20% {
+			opacity: 0.5;
+		}
+		50% {
 			opacity: 1;
 		}
-		ul.visualizer.reflection {
-
-			margin-bottom: 10px;
-			min-height: 100px;
+		80% {
+			opacity: 0.5;
 		}
-		
-		
-		audio {
-  display: none;
-}
-	</style>
-	<body>
-		<div id="workarea_visual">
-			<div class="main-sparkel-wrapper">
-				<div class="main-wrapper">
-					<div class="audio-content">
-						<span class="text button"><a href="#playbutton" id="playbutton" class="button play loading">p</a></span>
-						<span class="text">Runaway Chipmunk<span class="sub-text">Linkin Park</span></span>
-						<span class="text text-time">01:06</span>
-					</div>
-					<div class="full-visulizer">
+		100% {
+			opacity: 0;
+			margin-left: 39px;
+		}
+	}
+
+	/* Standard syntax */
+
+	@keyframes loading {
+		0% {
+			opacity: 0;
+			margin-left: -19px;
+		}
+		20% {
+			opacity: 0.5;
+		}
+		50% {
+			opacity: 1;
+		}
+		80% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 0;
+			margin-left: 39px;
+		}
+	}
+
+	a.button.play::before {
+		background: transparent none repeat scroll 0 0;
+		border-bottom: 20px solid transparent;
+		border-left: 35px solid #fff;
+		border-radius: 4px;
+		border-top: 20px solid transparent;
+		content: "";
+		display: inline-block;
+		height: 0;
+		opacity: 1;
+		transform: translateZ(0px);
+		-webkit-transform: translateZ(0px);
+		width: 0;
+		z-index: 1;
+		vertical-align: middle;
+		margin-left: 19px;
+		margin-top: 12px;
+
+		margin: 0;
+		position: absolute;
+		left: 18px;
+		top: 11px;
+	}
+
+	ul.visualizer {
+		display: inline-block;
+		height: auto;
+		line-height: 0;
+		list-style: outside none none;
+		margin: 0;
+		min-width: 100px;
+		padding: 0;
+		vertical-align: bottom;
+		width: auto;
+		padding: 0;
+		background: #000000;
+		position: relative;
+		width: 100%;
+		vertical-align: top;
+	}
+
+	@media only screen and (max-width: 1200px) {
+		ul.visualizer {
+			padding: 0 60px 6px;
+		}
+	}
+
+
+	ul.visualizer li {
+		background: #FFA1FF none repeat scroll 0 0;
+		display: inline-block;
+		height: 30px;
+		line-height: 0;
+		min-height: 3px;
+		vertical-align: baseline;
+
+		padding: 0;
+		height: 0px;
+		background-image: none;
+		background-size: 100% auto;
+		background-position: 0 bottom;
+		width: 2px;
+		box-shadow: 0px 0px 10px 2px rgba(255, 159, 255, 1);
+		border-radius: 10px;
+		margin-left: 3px;
+	}
+
+	div.playbutton {
+		width: 100%;
+		text-align: left;
+		height: auto;
+		min-height: 100px;
+	}
+
+	div.playbutton:empty {
+		background-image: url("images/puff.svg?ee");
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	ul.visualizer.reflection li {
+
+		vertical-align: top;
+		opacity: 1;
+	}
+
+	ul.visualizer.reflection {
+
+		margin-bottom: 10px;
+		min-height: 100px;
+	}
+
+
+	audio {
+		display: none;
+	}
+</style>
+
+<body>
+	<div id="workarea_visual">
+		<div class="main-sparkel-wrapper">
+			<div class="main-wrapper">
+				<div class="audio-content">
+					<span class="text button">
+						<a href="#playbutton" id="playbutton" class="button play loading">p</a>
+					</span>
+					<span class="text">Runaway Chipmunk
+						<span class="sub-text">Linkin Park</span>
+					</span>
+					<span class="text text-time">
+						<span id="audio-time">01:06</span>
+					</span>
+				</div>
+				<div class="full-visulizer">
 					<ul class="visualizer reflection"></ul>
-					</div>
 				</div>
 			</div>
 		</div>
-		<script>
-			/* comments - Initilize the Audio Context */
+	</div>
+	<script>
+		/* comments - Initilize the Audio Context */
 
-			var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-			var analyser = audioCtx.createAnalyser();
-			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-			window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
-			var PlayerBuffer = null;
-			var music = 'assets/test_audio.mp3';
-			var ipadmusic = 'assets/Linkin_Park_-_Runaway_Chipmunk.m4a';
-			var frequencyData = 0;
-			var bars;
-			var audio;
-			var sparkle = $(".main-sparkel-wrapper");
-		</script>
-		<script>
-			function supportCreateMediaElementSource(music) {
+		var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		var analyser = audioCtx.createAnalyser();
+		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
+		var PlayerBuffer = null;
+		var music = 'assets/test_audio.mp3';
+		var ipadmusic = 'assets/Linkin_Park_-_Runaway_Chipmunk.m4a';
+		var frequencyData = 0;
+		var bars;
+		var audio;
+		var sparkle = $(".main-sparkel-wrapper");
+	</script>
+	<script>
+		function supportCreateMediaElementSource(music) {
 
-				var javascriptNode;
+			var javascriptNode;
 
-				/* comments - Initilize the Audio node */
+			/* comments - Initilize the Audio node */
 
-				audio = new Audio();
-				audio.src = music;
-				audio.controls = false;
-				audio.autoplay = false;
-				audio.addEventListener('canplaythrough', function(){
-					$("#playbutton.loading").removeClass("loading");
-				}, false);
-				audio.addEventListener('pause', function(){
-					$("#playbutton").removeClass("playing");
-					sparkle.trigger("stop.sparkle");
-				}, false);
-				
-				audio.addEventListener('play', function(){
-					$("#playbutton").addClass("playing");
-					sparkle.trigger("start.sparkle");
-				}, false);
+			audio = new Audio();
+			audio.src = music;
+			audio.controls = false;
+			audio.autoplay = false;
+			audio.addEventListener('canplaythrough', function () {
+				$("#playbutton.loading").removeClass("loading");
+			}, false);
+			audio.addEventListener('pause', function () {
+				$("#playbutton").removeClass("playing");
+				sparkle.trigger("stop.sparkle");
+			}, false);
 
-				/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
+			audio.addEventListener('play', function () {
+				$("#playbutton").addClass("playing");
+				sparkle.trigger("start.sparkle");
+			}, false);
 
-				$(window).load(function() {
-					document.body.appendChild(audio);
-					$("#playbutton").on('touchstart click',function(event){
-						audio.muted = false;
-						if($(this).hasClass("playing")){
-							audio.pause();
-							//$(this).removeClass("playing");
-							
-						}else{
-							audio.play();
-							//$(this).addClass("playing");
-							
-						}
-						return false;
-					});
+			/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
+
+			$(window).load(function () {
+				document.body.appendChild(audio);
+				$("#playbutton").on('touchstart click', function (event) {
+					audio.muted = false;
+					if ($(this).hasClass("playing")) {
+						audio.pause();
+						//$(this).removeClass("playing");
+
+					} else {
+						audio.play();
+						//$(this).addClass("playing");
+
+					}
+					return false;
 				});
+			});
 
-				/* comments - Initilize the Javascript Node Processor */
+			/* comments - Initilize the Javascript Node Processor */
 
-				if (audioCtx.createScriptProcessor) {
-					javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
-				} else {
-					javascriptNode = audioCtx.createJavaScriptNode(2048, 1, 1);
-				}
-
-				// Wait for window.onload to fire. See crbug.com/112368
-				window.addEventListener('load', function(e) {
-					// Our <audio> element will be the audio source.
-										
-					var source = audioCtx.createMediaElementSource(audio);
-					source.connect(analyser);
-					javascriptNode.connect(audioCtx.destination);
-					analyser.connect(audioCtx.destination);
-					
-					
-					analyser.smoothingTimeConstant = 0.6;
-					//analyser.fftSize = 256;
-					//analyser.fftSize = 1024;
-					analyser.fftSize = 2048;
-					analyser.minDecibels = -60;
-					
-					analyser.maxDecibels = -10;
-
-					//analyser.maxDecibels = -10;
-					frequencyData = new Uint8Array(analyser.frequencyBinCount);
-
-					/* comments - Create visualizer animation node (Div element for bar animation) */
-
-					var barcount = jQuery("div.audio-content").outerWidth() / 5;
-
-					for ( i = 1; i < barcount; i = i + 2) {
-						$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
-					}
-
-					for ( i = barcount; i > 0; i = i - 2) {
-						$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
-					}
-					bars = $("ul.visualizer li.bars");
-
-					/* comments - This event will fired each time when ever a single bit of audio is played */
-
-					javascriptNode.onaudioprocess = function() {
-						//$("#playbutton.loading").removeClass("loading");
-						// get the average for the first channel
-						if(audio.muted){
-							console.info("muted");
-							$("#playbutton").removeClass("playing");
-							audio.pause();
-						}
-						frequencyData = new Uint8Array(analyser.frequencyBinCount);
-						analyser.getByteFrequencyData(frequencyData);
-						bars.each(function(index, bar) {
-							var value = frequencyData[$(bar).attr("ref")];
-							//value = parseInt(value / 31) * 31;
-							bar.style.height = value + 'px';
-							//console.info(frequencyData[index]);
-						});
-					}
-					//update();
-					// ...call requestAnimationFrame() and render the analyser's output to canvas.
-				}, false);
-
-			}
-		</script>
-		<script>
-			function loadSound(url) {
-				var request = new XMLHttpRequest();
-				request.open('GET', url, true);
-				request.responseType = 'arraybuffer';
-
-				// Decode asynchronously
-				request.onload = function() {
-					audioCtx.decodeAudioData(request.response, function(buffer) {
-						PlayerBuffer = buffer;
-						$("div.playbutton").append("<button id='playbutton'>play</button>");
-						$("#playbutton").on('touchstart click',function(event){
-							playSound(PlayerBuffer);
-							requestAnimationFrame(barAnimation);
-						});
-					});
-				}
-				request.send();
+			if (audioCtx.createScriptProcessor) {
+				javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
+			} else {
+				javascriptNode = audioCtx.createJavaScriptNode(2048, 1, 1);
 			}
 
-			function playSound(buffer) {
-				alert(buffer);
-				
-				var source = this.audioCtx.createBufferSource();
-				//var volume = this.audioCtx.createGain();
-				// creates a sound source
-				source.buffer = buffer;
-				// tell the source which sound to play
-				//source.connect(audioCtx.destination);       // connect the source to the context's destination (the speakers)
-				source.connect(this.analyser);
-				//volume.connect(this.audioCtx.destination);
-				source.loop = true;
-				source.noteOn(0);
-				//volume.start(this.audioCtx.currentTime + 0.01);
-				/*
-				var audiosource = this.audioCtx.createBufferSource();
-				// creates a sound source
-				audiosource.buffer = buffer;
-				// tell the source which sound to play
-				audiosource.connect(this.audioCtx.destination);       // connect the source to the context's destination (the speakers)
-				//audiosource.connect(this.analyser);
-				audiosource.loop = true;
-				audiosource.noteOn(0);
-				// play the source now
-				*/
-				
-			}
-
-			function notSupportCreateMediaElementSource(musicurl) {
-				this.analyser = audioCtx.createAnalyser();
-				$("body").append("<div class='playbutton'></div>");
-				loadSound(musicurl);
-
+			// Wait for window.onload to fire. See crbug.com/112368
+			window.addEventListener('load', function (e) {
 				// Our <audio> element will be the audio source.
 
-				this.analyser.smoothingTimeConstant = 0.0;
-				this.analyser.fftSize = 64;
-				this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+				var source = audioCtx.createMediaElementSource(audio);
+				source.connect(analyser);
+				javascriptNode.connect(audioCtx.destination);
+				analyser.connect(audioCtx.destination);
+
+
+				analyser.smoothingTimeConstant = 0.6;
+				//analyser.fftSize = 256;
+				//analyser.fftSize = 1024;
+				analyser.fftSize = 2048;
+				analyser.minDecibels = -60;
+
+				analyser.maxDecibels = -10;
+
+				//analyser.maxDecibels = -10;
+				frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
 				/* comments - Create visualizer animation node (Div element for bar animation) */
 
-				var barcount = 16;
+				var barcount = jQuery("div.audio-content").outerWidth() / 5;
 
-				for ( i = 0; i < barcount; i = i + 3) {
+
+
+				for (i = 1; i < barcount; i = i + 2) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 
-				for ( i = 0; i < barcount; i = i + 2) {
+				for (i = barcount; i > 0; i = i - 2) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 				bars = $("ul.visualizer li.bars");
 
 				/* comments - This event will fired each time when ever a single bit of audio is played */
 
+				javascriptNode.onaudioprocess = function () {
+					//$("#playbutton.loading").removeClass("loading");
+					// get the average for the first channel
+					if (audio.muted) {
+						console.info("muted");
+						$("#playbutton").removeClass("playing");
+						audio.pause();
+					}
+
+					$("#audio-time").text(parseInt((audio.currentTime/audio.duration)*100)+" %");
+					frequencyData = new Uint8Array(analyser.frequencyBinCount);
+					analyser.getByteFrequencyData(frequencyData);
+					bars.each(function (index, bar) {
+						var value = frequencyData[$(bar).attr("ref")];
+						//value = parseInt(value / 31) * 31;
+						bar.style.height = value + 'px';
+						//console.info(frequencyData[index]);
+					});
+				}
 				//update();
 				// ...call requestAnimationFrame() and render the analyser's output to canvas.
+			}, false);
 
-			}
+		}
+	</script>
+	<script>
+		function loadSound(url) {
+			var request = new XMLHttpRequest();
+			request.open('GET', url, true);
+			request.responseType = 'arraybuffer';
 
-			function barAnimation() {
-				analyser.smoothingTimeConstant = 0.0;
-				analyser.fftSize = 64;
-				analyser.getByteFrequencyData(frequencyData);
-				//console.info(frequencyData);
-				bars.each(function(index, bar) {
-					var value = frequencyData[$(bar).attr("ref")];
-					value = parseInt(value / 31) * 31;
-					bar.style.height = value + 'px';
+			// Decode asynchronously
+			request.onload = function () {
+				audioCtx.decodeAudioData(request.response, function (buffer) {
+					PlayerBuffer = buffer;
+					$("div.playbutton").append("<button id='playbutton'>play</button>");
+					$("#playbutton").on('touchstart click', function (event) {
+						playSound(PlayerBuffer);
+						requestAnimationFrame(barAnimation);
+					});
 				});
-				requestAnimationFrame(barAnimation);
 			}
-		</script>
-		<script>
-			var support = false;
-			if (!navigator.userAgent.match(/Android/i) && !navigator.userAgent.match(/webOS/i) && !navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i) && !navigator.userAgent.match(/iPod/i) && !navigator.userAgent.match(/BlackBerry/i) && !navigator.userAgent.match(/Windows Phone/i)) {
-				support = true;
-			}else{
-				
+			request.send();
+		}
+
+		function playSound(buffer) {
+			alert(buffer);
+
+			var source = this.audioCtx.createBufferSource();
+			//var volume = this.audioCtx.createGain();
+			// creates a sound source
+			source.buffer = buffer;
+			// tell the source which sound to play
+			//source.connect(audioCtx.destination);       // connect the source to the context's destination (the speakers)
+			source.connect(this.analyser);
+			//volume.connect(this.audioCtx.destination);
+			source.loop = true;
+			source.noteOn(0);
+			//volume.start(this.audioCtx.currentTime + 0.01);
+			/*
+			var audiosource = this.audioCtx.createBufferSource();
+			// creates a sound source
+			audiosource.buffer = buffer;
+			// tell the source which sound to play
+			audiosource.connect(this.audioCtx.destination);       // connect the source to the context's destination (the speakers)
+			//audiosource.connect(this.analyser);
+			audiosource.loop = true;
+			audiosource.noteOn(0);
+			// play the source now
+			*/
+
+		}
+
+		function notSupportCreateMediaElementSource(musicurl) {
+			this.analyser = audioCtx.createAnalyser();
+			$("body").append("<div class='playbutton'></div>");
+			loadSound(musicurl);
+
+			// Our <audio> element will be the audio source.
+
+			this.analyser.smoothingTimeConstant = 0.0;
+			this.analyser.fftSize = 64;
+			this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+
+			/* comments - Create visualizer animation node (Div element for bar animation) */
+
+			var barcount = 16;
+
+			for (i = 0; i < barcount; i = i + 3) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 			}
-			
-			if (support) {
-				supportCreateMediaElementSource(music);
-			} else {
-				notSupportCreateMediaElementSource(music);
+
+			for (i = 0; i < barcount; i = i + 2) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 			}
-		</script>
-		<script>
-		$(window).load(function() {
+			bars = $("ul.visualizer li.bars");
+
+			/* comments - This event will fired each time when ever a single bit of audio is played */
+
+			//update();
+			// ...call requestAnimationFrame() and render the analyser's output to canvas.
+
+		}
+
+		function barAnimation() {
+			analyser.smoothingTimeConstant = 0.0;
+			analyser.fftSize = 64;
+			analyser.getByteFrequencyData(frequencyData);
+			//console.info(frequencyData);
+			bars.each(function (index, bar) {
+				var value = frequencyData[$(bar).attr("ref")];
+				value = parseInt(value / 31) * 31;
+				bar.style.height = value + 'px';
+			});
+			requestAnimationFrame(barAnimation);
+		}
+	</script>
+	<script>
+		var support = false;
+		if (!navigator.userAgent.match(/Android/i) && !navigator.userAgent.match(/webOS/i) && !navigator.userAgent.match(/iPhone/i) && !navigator.userAgent.match(/iPad/i) && !navigator.userAgent.match(/iPod/i) && !navigator.userAgent.match(/BlackBerry/i) && !navigator.userAgent.match(/Windows Phone/i)) {
+			support = true;
+		} else {
+
+		}
+
+		if (support) {
+			supportCreateMediaElementSource(music);
+		} else {
+			notSupportCreateMediaElementSource(music);
+		}
+	</script>
+	<script>
+		$(window).load(function () {
 			sparkle = $(".main-sparkel-wrapper");
 			sparkle.sparkle({
-			  color: "#ffff00",
-			  count: 300,
-			  overlap: 0,
-			  speed: 1,
-			  minSize: 4,
-			  maxSize: 7,
-			  direction: "both"
+				color: "#ffff00",
+				count: 300,
+				overlap: 0,
+				speed: 1,
+				minSize: 4,
+				maxSize: 7,
+				direction: "both"
 			});
 			sparkle.off("mouseover.sparkle").off("mouseout.sparkle").off("focus.sparkle").off("blur.sparkle");
 		});
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>

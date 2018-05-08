@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>webaudio</title>
-		<meta name="description" content="" />
-		<meta name="author" content="koushik" />
+	<title>webaudio</title>
+	<meta name="description" content="" />
+	<meta name="author" content="koushik" />
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0" />
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		
-		<script src="js/jquery-1.11.2.min.js"></script>
-	</head>
-	<style>
-	body{
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+	<script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<style>
+	body {
 		background-color: #000000;
 		padding: 0;
 		margin: 0;
@@ -28,216 +29,229 @@
 		background-repeat: repeat;
 		background-position: 0 0;
 	}
+
 	#workarea_visual {
-    position: relative;
-    display: inline-block;
-    width: auto;
-    clear: both;
-    text-align: center;
-}
-	
-ul.visualizer {
-  display: inline-block;
-  height: auto;
-  line-height: 0;
-  list-style: outside none none;
-  margin: 0;
-  min-width: 100px;
-  padding: 0;
-  vertical-align: bottom;
-  width: auto;
-  padding: 0 80px 6px;
-  background: #000000;
-  position: relative;
-}
-ul#visualizer:after {
-        content: " ";
-    display: inline-block;
-    width: 100%;
-    height: 10px;
-    border-radius: 30%;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 35px 4px rgba(255,255,255,255.75);
-    -webkit-box-shadow: 0px 0px 35px 4px rgba(255,255,255,255.75);
-    left: 0;
-    position: absolute;
-    bottom: -1px;
-    z-index: 999;
-}
-ul.visualizer.reflection:after {
-background-image: url("images/rainbow.png");
-background-position: 100% auto;
-content: " ";
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-	left: 0;
-	background-size: 100% auto;
-    position: absolute;
-    top: -2px;
-	opacity: 0.5;
-}
-ul.visualizer li {
-  background: red none repeat scroll 0 0;
-  display: inline-block;
-  height: 30px;
-  line-height: 0;
-  margin-right: 1px;
-  min-height: 31px;
-  vertical-align: baseline;
-  width: 20px;
-  padding: 0;
-  height: 0px;
-  background-image: url("images/blue.png");
-  background-size: 100% auto;
-    background-position: 0 bottom;
-  width: 63px;
-}
+		position: relative;
+		display: inline-block;
+		width: auto;
+		clear: both;
+		text-align: center;
+	}
 
-ul.visualizer.reflection li {
-  
-  vertical-align: top;
-  opacity: 0.4;
-}
-ul.visualizer.reflection{
-  
-  margin-bottom: 10px;
-  
-}
-ul.visualizer li:nth-child(2n) {
-    background-image: url("images/blue1.png");
-}
-ul.visualizer li:nth-child(3n) {
-    background-image: url("images/green.png");
-}
-ul.visualizer li:nth-child(4n) {
-    background-image: url("images/ligreen.png");
-}
-ul.visualizer li:nth-child(5n) {
-    background-image: url("images/ligreen1.png");
-}
-ul.visualizer li:nth-child(6n) {
-    background-image: url("images/ligreen2.png");
-}
-ul.visualizer li:nth-child(7n) {
-    background-image: url("images/red.png");
-}
+	ul.visualizer {
+		display: inline-block;
+		height: auto;
+		line-height: 0;
+		list-style: outside none none;
+		margin: 0;
+		min-width: 100px;
+		padding: 0;
+		vertical-align: bottom;
+		width: auto;
+		padding: 0 80px 6px;
+		background: #000000;
+		position: relative;
+	}
+
+	ul#visualizer:after {
+		content: " ";
+		display: inline-block;
+		width: 100%;
+		height: 10px;
+		border-radius: 30%;
+		background-color: #ffffff;
+		box-shadow: 0px 0px 35px 4px rgba(255, 255, 255, 255.75);
+		-webkit-box-shadow: 0px 0px 35px 4px rgba(255, 255, 255, 255.75);
+		left: 0;
+		position: absolute;
+		bottom: -1px;
+		z-index: 999;
+	}
+
+	ul.visualizer.reflection:after {
+		background-image: url("images/rainbow.png");
+		background-position: 100% auto;
+		content: " ";
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		background-size: 100% auto;
+		position: absolute;
+		top: -2px;
+		opacity: 0.5;
+	}
+
+	ul.visualizer li {
+		background: red none repeat scroll 0 0;
+		display: inline-block;
+		height: 30px;
+		line-height: 0;
+		margin-right: 1px;
+		min-height: 31px;
+		vertical-align: baseline;
+		width: 20px;
+		padding: 0;
+		height: 0px;
+		background-image: url("images/blue.png");
+		background-size: 100% auto;
+		background-position: 0 bottom;
+		width: 63px;
+	}
+
+	ul.visualizer.reflection li {
+
+		vertical-align: top;
+		opacity: 0.4;
+	}
+
+	ul.visualizer.reflection {
+
+		margin-bottom: 10px;
+
+	}
+
+	ul.visualizer li:nth-child(2n) {
+		background-image: url("images/blue1.png");
+	}
+
+	ul.visualizer li:nth-child(3n) {
+		background-image: url("images/green.png");
+	}
+
+	ul.visualizer li:nth-child(4n) {
+		background-image: url("images/ligreen.png");
+	}
+
+	ul.visualizer li:nth-child(5n) {
+		background-image: url("images/ligreen1.png");
+	}
+
+	ul.visualizer li:nth-child(6n) {
+		background-image: url("images/ligreen2.png");
+	}
+
+	ul.visualizer li:nth-child(7n) {
+		background-image: url("images/red.png");
+	}
 
 
 
-ul.visualizer:before {
-  display: inline-block;
-  width: 1px;
-  height: 300px;
-  vertical-align: bottom;
-  content: " ";
-}
-	</style>
-	<body>
-		<div id="workarea_visual">
+	ul.visualizer:before {
+		display: inline-block;
+		width: 1px;
+		height: 300px;
+		vertical-align: bottom;
+		content: " ";
+	}
+</style>
+
+<body>
+	<div id="workarea_visual">
 		<ul class="visualizer" id="visualizer"></ul>
 		<ul class="visualizer reflection"></ul>
-		</div>
-		<script>
-			var javascriptNode;
-			
-			/* comments - Initilize the Audio node */
-			
-			var audio = new Audio();
-			audio.src = 'assets/test_audio.mp3';
-			audio.controls = true;
-			audio.autoplay = true;
-			var frequencyData = 0;
-			var bars;
-			
-			/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
-			
-			$( window ).load(function() {
-			  document.body.appendChild(audio);
-			});		
-			
-			/* comments - Initilize the Audio Context */
-			
-			var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-			var analyser = audioCtx.createAnalyser();
-  
-			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-			window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
-			
-			/* comments - Initilize the Javascript Node Processor */
-			
-			javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
-			
-			// Wait for window.onload to fire. See crbug.com/112368
-			window.addEventListener('load', function(e) {
-			  // Our <audio> element will be the audio source.
-			  var source = audioCtx.createMediaElementSource(audio);
-			  source.connect(analyser);
-			  javascriptNode.connect(audioCtx.destination);
-			  analyser.connect(audioCtx.destination);
-			  analyser.smoothingTimeConstant = 0.0;
-			  analyser.fftSize = 64;
-			  
-			  //analyser.maxDecibels = -10;
-			  frequencyData = new Uint8Array(analyser.frequencyBinCount);
-			  
-			  /* comments - Create visualizer animation node (Div element for bar animation) */
-			  
-			  var barcount = 16;
-			  
-			  for(i=0; i<barcount; i = i+3){
-			  	$("ul.visualizer").append("<li class='bars bar"+i+"' ref='"+i+"' ></li>")
-			  }
-			  
-			  
-			  for(i=0; i<barcount; i = i+2){
-			  	$("ul.visualizer").append("<li class='bars bar"+i+"' ref='"+i+"' ></li>")
-			  }
-			  bars = $("ul.visualizer li.bars");
-			  
-			  /* comments - This event will fired each time when ever a single bit of audio is played */
-			  
-			 javascriptNode.onaudioprocess = function() {
+	</div>
+	<script>
+		var javascriptNode;
+
+		/* comments - Initilize the Audio node */
+
+		var audio = new Audio();
+		audio.src = 'assets/test_audio.mp3';
+		audio.controls = true;
+		audio.autoplay = true;
+		var frequencyData = 0;
+		var bars;
+
+		/* comments - Add the Audio node to the HTML Dom after html loading complete (Start auto playing)*/
+
+		$(window).load(function () {
+			document.body.appendChild(audio);
+		});
+
+		/* comments - Initilize the Audio Context */
+
+		var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		var analyser = audioCtx.createAnalyser();
+
+		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
+
+		/* comments - Initilize the Javascript Node Processor */
+
+		javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
+
+		// Wait for window.onload to fire. See crbug.com/112368
+		window.addEventListener('load', function (e) {
+			// Our <audio> element will be the audio source.
+			var source = audioCtx.createMediaElementSource(audio);
+			source.connect(analyser);
+			javascriptNode.connect(audioCtx.destination);
+			analyser.connect(audioCtx.destination);
+			analyser.smoothingTimeConstant = 0.0;
+			analyser.fftSize = 64;
+
+			//analyser.maxDecibels = -10;
+			frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+			/* comments - Create visualizer animation node (Div element for bar animation) */
+
+			var barcount = 16;
+
+			for (i = 0; i < barcount; i = i + 3) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
+			}
+
+
+			for (i = 0; i < barcount; i = i + 2) {
+				$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
+			}
+			bars = $("ul.visualizer li.bars");
+
+			/* comments - This event will fired each time when ever a single bit of audio is played */
+
+			javascriptNode.onaudioprocess = function () {
 				// get the average for the first channel
-				frequencyData =  new Uint8Array(analyser.frequencyBinCount);
+				frequencyData = new Uint8Array(analyser.frequencyBinCount);
 				analyser.getByteFrequencyData(frequencyData);
-				bars.each(function(index, bar) {
+				bars.each(function (index, bar) {
 					var value = frequencyData[$(bar).attr("ref")];
 					value = parseInt(value / 31) * 31;
 					bar.style.height = value + 'px';
 					//console.info(frequencyData[index]);
 				});
-			 }
-		
-			  
-			  //update();
-			  // ...call requestAnimationFrame() and render the analyser's output to canvas.
-			}, false);
-			
-			var togglePlayback = function() {
-  if (this.isPlaying) {
-    // Stop playback
-    this.source[this.source.stop ? 'stop': 'noteOff'](0);
-    this.startOffset += context.currentTime - this.startTime;
-    console.log('paused at', this.startOffset);
-    // Save the position of the play head.
-  } else {
-    this.startTime = context.currentTime;
-    console.log('started at', this.startOffset);
-    this.source = context.createBufferSource();
-    // Connect graph
-    this.source.connect(this.analyser);
-    this.source.buffer = this.buffer;
-    this.source.loop = true;
-    // Start playback, but make sure we stay in bound of the buffer.
-    this.source[this.source.start ? 'start' : 'noteOn'](0, this.startOffset % this.buffer.duration);
-    // Start visualizer.
-    requestAnimFrame(this.draw.bind(this));
-  }
-  this.isPlaying = !this.isPlaying;
-}
-			
-			
-		</script>
-	</body>
+			}
+
+
+			//update();
+			// ...call requestAnimationFrame() and render the analyser's output to canvas.
+		}, false);
+
+		var togglePlayback = function () {
+			if (this.isPlaying) {
+				// Stop playback
+				this.source[this.source.stop ? 'stop' : 'noteOff'](0);
+				this.startOffset += context.currentTime - this.startTime;
+				console.log('paused at', this.startOffset);
+				// Save the position of the play head.
+			} else {
+				this.startTime = context.currentTime;
+				console.log('started at', this.startOffset);
+				this.source = context.createBufferSource();
+				// Connect graph
+				this.source.connect(this.analyser);
+				this.source.buffer = this.buffer;
+				this.source.loop = true;
+				// Start playback, but make sure we stay in bound of the buffer.
+				this.source[this.source.start ? 'start' : 'noteOn'](0, this.startOffset % this.buffer.duration);
+				// Start visualizer.
+				requestAnimFrame(this.draw.bind(this));
+			}
+			this.isPlaying = !this.isPlaying;
+		}
+
+
+	</script>
+</body>
+
 </html>

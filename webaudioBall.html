@@ -1,117 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
 
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>webaudio</title>
-		<meta name="description" content="" />
-		<meta name="author" content="koushik" />
+	<title>webaudio</title>
+	<meta name="description" content="" />
+	<meta name="author" content="koushik" />
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0" />
 
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<script src="js/jquery-1.11.2.min.js"></script>
-	</head>
-	<style>
-#visualizer {
-  display: inline-block;
-  height: 400px;
-  line-height: 0;
-  list-style: outside none none;
-  margin: 0;
-  min-width: 100px;
-  padding: 0;
-  vertical-align: bottom;
-  width: 100%;
-}
-#visualizer li {
-  background: red none repeat scroll 0 0;
-  display: inline-block;
-  height: 20px;
-  line-height: 0;
-  margin-right: 0;
-  min-height: 20px;
-  vertical-align: middle;
-  width: 20px;
-  
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4e391+0,61c419+50,b4e391+100;Green+3D */
-background: rgb(180,227,145); /* Old browsers */
-/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2I0ZTM5MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzYxYzQxOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNGUzOTEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-background: -moz-linear-gradient(top,  rgba(180,227,145,1) 0%, rgba(97,196,25,1) 50%, rgba(180,227,145,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(180,227,145,1)), color-stop(50%,rgba(97,196,25,1)), color-stop(100%,rgba(180,227,145,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* IE10+ */
-background: linear-gradient(to bottom,  rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 ); /* IE6-8 */
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<style>
+	#visualizer {
+		display: inline-block;
+		height: 400px;
+		line-height: 0;
+		list-style: outside none none;
+		margin: 0;
+		min-width: 100px;
+		padding: 0;
+		vertical-align: bottom;
+		width: 100%;
+	}
 
-}
-#visualizer:before {
-  display: inline-block;
-  width: 1px;
-  height: 400px;
-  vertical-align: middle;
-  content: " ";
-}
-	</style>
-	<body>
-		<ul id="visualizer"></ul>
-		<script>
-			var audio = new Audio();
-			audio.src = 'assets/test_audio.mp3';
-			audio.controls = true;
-			audio.autoplay = true;
-			var frequencyData = 0;
-			var bars;
-			document.body.appendChild(audio);
-			
-			var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-			var analyser = audioCtx.createAnalyser();
-			window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-			window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
-			
-			// Wait for window.onload to fire. See crbug.com/112368
-			window.addEventListener('load', function(e) {
-			  // Our <audio> element will be the audio source.
-			  var source = audioCtx.createMediaElementSource(audio);
-			  source.connect(analyser);
-			  analyser.connect(audioCtx.destination);
-			  analyser.fftSize = 64;
-			  //analyser.maxDecibels = -10;
-			  frequencyData = new Uint8Array(analyser.frequencyBinCount);
-			  var count = analyser.frequencyBinCount;
-			  console.info(count);
-			  for(i=count; i>=0; i = i - 2){
-			  	$("#visualizer").append("<li class='bars bar"+i+"' ref='"+i+"'></li>");
-			  }
-			  
-			  for(i=0; i<=count; i= i + 2){
-			  	$("#visualizer").append("<li class='bars bar"+i+"' ref='"+i+"'></li>");
-			  }
-			  
-			  bars = $("#visualizer li.bars");
-			  update();
-			  // ...call requestAnimationFrame() and render the analyser's output to canvas.
-			}, false);
-			
-			function update() {
+	#visualizer li {
+		background: red none repeat scroll 0 0;
+		display: inline-block;
+		height: 20px;
+		line-height: 0;
+		margin-right: 0;
+		min-height: 20px;
+		vertical-align: middle;
+		width: 20px;
 
-				requestAnimationFrame(update);
-				analyser.getByteFrequencyData(frequencyData);
-				bars.each(function(index, bar) {
-					bar.style.height = frequencyData[$(bar).attr("ref")] + 'px';
-					//console.info(frequencyData[index]);
-				});
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4e391+0,61c419+50,b4e391+100;Green+3D */
+		background: rgb(180, 227, 145);
+		/* Old browsers */
+		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2I0ZTM5MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzYxYzQxOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNGUzOTEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top, rgba(180, 227, 145, 1) 0%, rgba(97, 196, 25, 1) 50%, rgba(180, 227, 145, 1) 100%);
+		/* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(180, 227, 145, 1)), color-stop(50%, rgba(97, 196, 25, 1)), color-stop(100%, rgba(180, 227, 145, 1)));
+		/* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(180, 227, 145, 1) 0%, rgba(97, 196, 25, 1) 50%, rgba(180, 227, 145, 1) 100%);
+		/* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(180, 227, 145, 1) 0%, rgba(97, 196, 25, 1) 50%, rgba(180, 227, 145, 1) 100%);
+		/* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(180, 227, 145, 1) 0%, rgba(97, 196, 25, 1) 50%, rgba(180, 227, 145, 1) 100%);
+		/* IE10+ */
+		background: linear-gradient(to bottom, rgba(180, 227, 145, 1) 0%, rgba(97, 196, 25, 1) 50%, rgba(180, 227, 145, 1) 100%);
+		/* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391', GradientType=0);
+		/* IE6-8 */
+	}
 
-			};
-			
-		</script>
-	</body>
+	#visualizer:before {
+		display: inline-block;
+		width: 1px;
+		height: 400px;
+		vertical-align: middle;
+		content: " ";
+	}
+</style>
+
+<body>
+	<ul id="visualizer"></ul>
+	<script>
+		var audio = new Audio();
+		audio.src = 'assets/test_audio.mp3';
+		audio.controls = true;
+		audio.autoplay = true;
+		var frequencyData = 0;
+		var bars;
+		document.body.appendChild(audio);
+
+		var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		var analyser = audioCtx.createAnalyser();
+		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
+
+		// Wait for window.onload to fire. See crbug.com/112368
+		window.addEventListener('load', function (e) {
+			// Our <audio> element will be the audio source.
+			var source = audioCtx.createMediaElementSource(audio);
+			source.connect(analyser);
+			analyser.connect(audioCtx.destination);
+			analyser.fftSize = 64;
+			//analyser.maxDecibels = -10;
+			frequencyData = new Uint8Array(analyser.frequencyBinCount);
+			var count = analyser.frequencyBinCount;
+			console.info(count);
+			for (i = count; i >= 0; i = i - 2) {
+				$("#visualizer").append("<li class='bars bar" + i + "' ref='" + i + "'></li>");
+			}
+
+			for (i = 0; i <= count; i = i + 2) {
+				$("#visualizer").append("<li class='bars bar" + i + "' ref='" + i + "'></li>");
+			}
+
+			bars = $("#visualizer li.bars");
+			update();
+			// ...call requestAnimationFrame() and render the analyser's output to canvas.
+		}, false);
+
+		function update() {
+
+			requestAnimationFrame(update);
+			analyser.getByteFrequencyData(frequencyData);
+			bars.each(function (index, bar) {
+				bar.style.height = frequencyData[$(bar).attr("ref")] + 'px';
+				//console.info(frequencyData[index]);
+			});
+
+		};
+
+	</script>
+</body>
+
 </html>
