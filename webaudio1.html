@@ -117,7 +117,7 @@
 		font-family: 'Orbitron', sans-serif;
 		height: auto;
 	}
-
+	
 	.audio-content>span.text.button {
 		width: 1%;
 		overflow: hidden;
@@ -296,6 +296,10 @@
 		position: relative;
 		width: 100%;
 		vertical-align: top;
+	}
+
+	ul.visualizer li.complete{
+		background-color: chartreuse;
 	}
 
 	@media only screen and (max-width: 1200px) {
@@ -479,23 +483,26 @@
 				bars = $("ul.visualizer li.bars");
 
 				/* comments - This event will fired each time when ever a single bit of audio is played */
-
+				let persent = 0;
 				javascriptNode.onaudioprocess = function () {
 					//$("#playbutton.loading").removeClass("loading");
 					// get the average for the first channel
+					persent = 0;
 					if (audio.muted) {
 						console.info("muted");
 						$("#playbutton").removeClass("playing");
 						audio.pause();
 					}
-
-					$("#audio-time").text(parseInt((audio.currentTime/audio.duration)*100)+" %");
+					
+					persent = parseInt((audio.currentTime/audio.duration)*100);
+					$("#audio-time").text(persent+" %");
 					frequencyData = new Uint8Array(analyser.frequencyBinCount);
 					analyser.getByteFrequencyData(frequencyData);
 					bars.each(function (index, bar) {
 						var value = frequencyData[$(bar).attr("ref")];
 						//value = parseInt(value / 31) * 31;
 						bar.style.height = value + 'px';
+						if(index <= persent) bar.className = "bars complete"; 
 						//console.info(frequencyData[index]);
 					});
 				}
