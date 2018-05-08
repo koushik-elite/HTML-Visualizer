@@ -1,0 +1,65 @@
+<!doctype html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+<title>Visualizer | Web Audio API</title>
+
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+</head>
+
+<body>
+
+<div id="container">
+
+  <div id="wrapper">
+    <div id="content">
+
+      
+<div class="post">
+  <h2>Visualizer</h2>
+  
+
+<script>
+var url="";
+function loadBuffer(){
+	var request = new XMLHttpRequest();
+	request.open("GET", url, true);
+	request.responseType = "arraybuffer";
+	var loader = this;
+	request.onload = function() {
+    // Asynchronously decode the audio file data in request.response
+    loader.context.decodeAudioData(
+      request.response,
+      function(buffer) {
+        if (!buffer) {
+          alert('error decoding file data: ' + url);
+          return;
+        }
+        loader.bufferList[index] = buffer;
+        if (++loader.loadCount == loader.urlList.length)
+          loader.onload(loader.bufferList);
+      },
+      function(error) {
+        console.error('decodeAudioData error', error);
+      }
+    );
+  }
+
+  request.onerror = function() {
+    alert('BufferLoader: XHR error');
+  }
+
+  request.send();
+  }
+</script>
+
+  </p>
+</div>
+
+
+    </div>
+
+  </div>
+
+  </body>
+</html>
