@@ -299,7 +299,8 @@
 	}
 
 	ul.visualizer li.complete{
-		background-color: chartreuse;
+		background-color: #7FFF00;
+		box-shadow: 0px 0px 10px 2px rgba(127,255,0, 1);
 	}
 
 	@media only screen and (max-width: 1200px) {
@@ -343,10 +344,16 @@
 
 	ul.visualizer.reflection li {
 
-		vertical-align: top;
+		vertical-align: middle;
 		opacity: 1;
 	}
-
+ul.visualizer:before {
+    content: "";
+    height: 200px;
+    width: 1px;
+    display: inline-block;
+    vertical-align: middle;
+}
 	ul.visualizer.reflection {
 
 		margin-bottom: 10px;
@@ -380,6 +387,7 @@
 			</div>
 		</div>
 	</div>
+	<canvas id="DemoCanvas" width="1000" height="200"></canvas>
 	<script>
 		/* comments - Initilize the Audio Context */
 
@@ -388,7 +396,7 @@
 		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
 		window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
 		var PlayerBuffer = null;
-		var music = 'assets/test_audio.mp3';
+		var music = 'assets/OutboundSampleRecording.mp3';
 		var ipadmusic = 'assets/Linkin_Park_-_Runaway_Chipmunk.m4a';
 		var frequencyData = 0;
 		var bars;
@@ -396,6 +404,32 @@
 		var sparkle = $(".main-sparkel-wrapper");
 	</script>
 	<script>
+	
+	var canvas = document.getElementById('DemoCanvas');
+//Always check for properties and methods, to make sure your code doesn't break in other browsers.
+if (canvas.getContext){
+  var context = canvas.getContext('2d');
+  // Reset the current path
+  
+}
+   
+function createLine(i, f, limit){
+	context.beginPath(); 
+	// Staring point (10,45)
+	//f = f*1.5;
+	context.moveTo(10 + ( i * 3) , ( 90 - f ) < 30 ? ( 90 - f/2 ) : ( 90 - f ));
+	// End point (180,47)
+	context.lineTo(10 + ( i * 3) , ( 110 + f ) < 160 ? ( 100 + f  ) : ( 100 + f/2 ) );
+	// Make the line visible
+	if(i <= limit) context.strokeStyle = "#7FFF00";
+	else context.strokeStyle = "#FFA1FF";
+	
+	context.shadowColor = "#FFA1FF";
+	context.shadowOffsetX = 1;
+	context.shadowOffsetY = 1;
+	context.shadowBlur = 8;
+	context.stroke();
+}
 		function supportCreateMediaElementSource(music) {
 
 			var javascriptNode;
@@ -456,16 +490,16 @@
 				analyser.connect(audioCtx.destination);
 
 
-				analyser.smoothingTimeConstant = 0.6;
+				analyser.smoothingTimeConstant = 0.3;
 				//analyser.fftSize = 256;
 				//analyser.fftSize = 1024;
 				analyser.fftSize = 2048;
-				analyser.minDecibels = -60;
+				analyser.minDecibels = -80;
 
-				analyser.maxDecibels = -10;
+				analyser.maxDecibels = -20;
 
 				//analyser.maxDecibels = -10;
-				frequencyData = new Uint8Array(analyser.frequencyBinCount);
+				//frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
 				/* comments - Create visualizer animation node (Div element for bar animation) */
 
@@ -473,17 +507,18 @@
 
 
 
-				for (i = 1; i < barcount; i = i + 2) {
+				for (let i = 1; i < parseInt(barcount/2); i = i + 1) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 
-				for (i = barcount; i > 0; i = i - 2) {
+				for (let i = parseInt(barcount/2); i > 0; i = i - 1) {
 					$("ul.visualizer").append("<li class='bars bar" + i + "' ref='" + i + "' ></li>")
 				}
 				bars = $("ul.visualizer li.bars");
-
+				
 				/* comments - This event will fired each time when ever a single bit of audio is played */
 				let persent = 0;
+				let comCount=0;
 				javascriptNode.onaudioprocess = function () {
 					//$("#playbutton.loading").removeClass("loading");
 					// get the average for the first channel
@@ -495,16 +530,31 @@
 					}
 					
 					persent = parseInt((audio.currentTime/audio.duration)*100);
+					
+					comCount = parseInt(bars.length * (persent/100));
 					$("#audio-time").text(persent+" %");
 					frequencyData = new Uint8Array(analyser.frequencyBinCount);
 					analyser.getByteFrequencyData(frequencyData);
+					
+					console.info(bars.length);
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					for (let i = 1; i <= 125; i = i + 1) {
+						//var value1 = frequencyData[i];
+						//var value2 = frequencyData[(512 - i)];
+						createLine(i, frequencyData[i], comCount);
+						createLine((251 - i), frequencyData[i], comCount);
+					}
+
 					bars.each(function (index, bar) {
 						var value = frequencyData[$(bar).attr("ref")];
+						//createLine(index, value, comCount);
+						
 						//value = parseInt(value / 31) * 31;
 						bar.style.height = value + 'px';
-						if(index <= persent) bar.className = "bars complete"; 
+						if(index <= comCount) bar.className = "bars complete"; 
 						//console.info(frequencyData[index]);
 					});
+					
 				}
 				//update();
 				// ...call requestAnimationFrame() and render the analyser's output to canvas.
